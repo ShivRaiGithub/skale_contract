@@ -4,7 +4,6 @@ pragma solidity ^0.8.20;
 import "forge-std/Script.sol";
 import "../src/SKBEATToken.sol";
 import "../src/SKBEATTokenSale.sol";
-import "../src/MockUSDCToken.sol";
 
 contract DeployScript is Script {
     string constant TOKEN_URI = "ipfs://bafkreidm3tymj6bzntjux4rxtspsx4jukobknprxhzq76aa2k34aymtdo4";
@@ -30,9 +29,7 @@ contract DeployScript is Script {
         console.log("");
 
         // Step 2: Deploy or get USDC Token
-        address usdcTokenAddress;
-
-        usdcTokenAddress = vm.envAddress("USDC_TOKEN_ADDRESS");
+        address usdcTokenAddress = vm.envAddress("USDC_TOKEN_ADDRESS");
         console.log("2. Using existing USDC Token at:", usdcTokenAddress);
 
         console.log("");
@@ -43,6 +40,7 @@ contract DeployScript is Script {
             address(skbeatToken),
             usdcTokenAddress
         );
+        tokenSale.setPrice(6); // Set initial price: 6 skBEAT = 1 USDC
         console.log("   Token Sale deployed at:", address(tokenSale));
         console.log("");
 
@@ -83,7 +81,7 @@ contract DeployScript is Script {
         console.log("Token Details:");
         console.log("--------------");
         console.log("skBEAT Decimals:", skbeatToken.decimals());
-        console.log("Exchange Rate: 1 skBEAT = 1 USDC");
+        console.log("Exchange Rate: 1 USDC =", tokenSale.skbeatPerUsdc(), "skBEAT");
         console.log("========================================");
         
         // Save deployment addresses to file
