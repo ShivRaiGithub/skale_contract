@@ -10,7 +10,7 @@ uint256 usdcRequired = (skbeatAmount + denominator - 1) / denominator;
 ```
 
 This ensures buyer never underpays due to integer divison truncation.
-3. skbeatPerUsdc: Added bounds on skbeatPerUsdc to prevent invalid or unsafe pricing values.
+3. skbeatPerUsdc: Added bounds on skbeatPerUsdc to prevent invalid or unsafe pricing values.   
 4. Helper function consistency: calculateUsdcRequired() now uses the same logic as buyTokens().
 
 
